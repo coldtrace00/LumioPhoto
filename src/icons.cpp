@@ -80,10 +80,10 @@ void drawGlyph(QPainter &p, Id id, const QColor &c)
         break;
     }
     case RotateLeft:
-        rotateArrow(p, true);
+        rotateArrow(p, false); // стрілка проти годинникової
         break;
     case RotateRight:
-        rotateArrow(p, false);
+        rotateArrow(p, true); // стрілка за годинниковою
         break;
     case Export:
         p.drawPolyline(poly({{8, 9}, {4, 9}, {4, 20}, {20, 20}, {20, 9}, {16, 9}}));

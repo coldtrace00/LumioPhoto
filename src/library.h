@@ -3,6 +3,7 @@
 #include "photo.h"
 
 #include <QSet>
+#include <QHash>
 #include <QStringList>
 
 class QSettings;
@@ -27,7 +28,8 @@ struct Album {
     int count = 0;
 };
 
-bool open(QString *error = nullptr);
+bool open(QString *error = nullptr); // повторний виклик нічого не робить
+bool isOpen();
 QString dbPath();
 
 QStringList roots();
@@ -40,6 +42,10 @@ PhotoList loadAll();
 bool isUnderRoots(const QString &path, const QStringList &roots);
 // Повертає записи для цих файлів (у тому ж порядку), за потреби додає їх у базу.
 PhotoList ensurePhotos(const QStringList &paths);
+// Ключ шляху для порівняння (у Windows — без урахування регістру)
+QString pathKey(const QString &path);
+// Правки (JSON) для фото з цієї папки, у яких вони є: ключ — pathKey(шлях)
+QHash<QString, QString> editsInFolder(const QString &folder);
 void setStarred(const QVector<qint64> &ids, bool starred);
 void setTags(qint64 id, const QString &tags);
 void setCaption(qint64 id, const QString &caption);

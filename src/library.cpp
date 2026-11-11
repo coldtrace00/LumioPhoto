@@ -97,8 +97,15 @@ QString dbPath()
     return AppPaths::dataDir() + QStringLiteral("/library.db");
 }
 
+bool isOpen()
+{
+    return QSqlDatabase::contains() && QSqlDatabase::database(QLatin1String(QSqlDatabase::defaultConnection), false).isOpen();
+}
+
 bool open(QString *error)
 {
+    if (isOpen())
+        return true;
     QSqlDatabase db = QSqlDatabase::addDatabase(QStringLiteral("QSQLITE"));
     db.setDatabaseName(dbPath());
     if (!db.open()) {
@@ -200,10 +207,6 @@ Qt::CaseSensitivity pathCase()
 #endif
 }
 
-QString pathKey(const QString &p)
-{
-    return pathCase() == Qt::CaseInsensitive ? p.toLower() : p;
-}
 
 Photo photoFromQuery(const QSqlQuery &q)
 {
@@ -227,6 +230,28 @@ Photo photoFromQuery(const QSqlQuery &q)
 const char *kPhotoColumns = "id, path, folder, name, size, mtime, taken, width, height, starred, tags, caption, edits";
 
 } // namespace
+
+QString pathKey(const QString &p)
+{
+    const QString c = QDir::cleanPath(QDir::fromNativeSeparators(p));
+    return pathCase() == Qt::CaseInsensitive ? c.toLower() : c;
+}
+
+QHash<QString, QString> editsInFolder(const QString &folder)
+{
+    QHash<QString, QString> out;
+    if (!isOpen())
+        return out;
+    QSqlQuery q;
+    q.setForwardOnly(true);
+    q.prepare(QStringLiteral("SELECT path, edits FROM photos WHERE folder = ?%1 AND edits <> ''")
+                  .arg(pathCase() == Qt::CaseInsensitive ? QStringLiteral(" COLLATE NOCASE") : QString()));
+    q.addBindValue(QDir::cleanPath(QDir::fromNativeSeparators(folder)));
+    if (exec(q))
+        while (q.next())
+            out.insert(pathKey(q.value(0).toString()), q.value(1).toString());
+    return out;
+}
 
 bool isUnderRoots(const QString &path, const QStringList &roots)
 {

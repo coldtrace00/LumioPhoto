@@ -4,8 +4,8 @@
 
 **Lumio Photo** — швидкий локальний організатор і редактор фото для Windows на **C++ / Qt**.
 Відкрита заміна Google Picasa: бібліотека з папок, миттєві мініатюри, перегляд, неруйнівне
-редагування, альбоми, слайдшоу, експорт. Може бути програмою за замовчуванням для фото —
-подвійний клік у Провіднику відкриває знімок у Lumio Photo.
+редагування, альбоми, слайдшоу, експорт. Може бути програмою за замовчуванням для фото:
+подвійний клік у Провіднику відкриває знімок у швидкому переглядачі, як Picasa Photo Viewer.
 
 **[⬇ Завантажити останню версію](https://github.com/coldtrace00/LumioPhoto/releases/latest)** — файл `LumioPhoto-Setup.exe`.
 
@@ -35,6 +35,12 @@
 - **Портативна версія**: бібліотека, налаштування й мініатюри лежать у папці `data` поруч
   із програмою. Її можна носити на флешці, а в систему нічого не записується.
 
+Потрібно: **Windows 10 або 11, 64-біт**.
+
+> **Якщо Windows показує «Windows захистила ваш ПК»** — це SmartScreen: інсталятор не має платного цифрового
+> підпису, тому Windows його ще «не знає». Натисніть **«Докладніше» → «Усе одно запустити»**.
+> Вихідний код повністю відкритий у цьому репозиторії, і програму можна зібрати самому (див. нижче).
+
 ## Програма за замовчуванням для фото
 
 Меню ⚙ → **«Відкривати фото в Lumio Photo…»**. Програма зареєструється для JPG, PNG, BMP, GIF, WebP,
@@ -42,11 +48,18 @@ TIFF, HEIC та інших форматів і відкриє «Параметр
 Там натисніть кнопку, що встановлює її за замовчуванням (Windows 10/11 дозволяє зробити це лише
 самому користувачу). Інший спосіб: правий клік по фото → «Відкрити за допомогою» → Lumio Photo → «Завжди».
 
-Після цього:
-- **подвійний клік по фото в Провіднику** відкриває його в Lumio Photo;
-- стрілки ← → гортають інші фото з тієї самої папки, як у Picasa Photo Viewer;
-- якщо програма вже відкрита, фото відкривається в тому ж вікні, без другої копії;
-- фото з папок поза бібліотекою до бібліотеки не додаються, але зірочки й правки для них теж зберігаються.
+Після цього **подвійний клік по фото в Провіднику** відкриває **швидкий переглядач**, як Picasa Photo Viewer.
+Бібліотека при цьому не відкривається. Видно лише фото на затемненому тлі й панель кнопок:
+- ← → (а також колесо миші для масштабу) — інші фото з тієї самої папки, наступні підвантажуються заздалегідь;
+- −, +, «Вмістити», «100%»; перетягування мишею, коли фото збільшене;
+- **повернути ліворуч / праворуч** (Ctrl+L / Ctrl+R). Поворот неруйнівний: він запам'ятовується в Lumio Photo,
+  а сам файл не змінюється. Щоб записати поворот у файл, відкрийте фото в редакторі й натисніть «Зберегти у файл»;
+- «Видалити в кошик» (Delete);
+- **«Редагувати»** (Enter) — відкриває це фото в повному Lumio Photo з редактором;
+- Esc, ✕ або клік по тлі — закрити.
+
+Якщо переглядач уже відкритий, нове фото відкривається в ньому ж, без другої копії програми.
+Фото з папок поза бібліотекою до неї не додаються.
 
 ## Оновлення
 
@@ -74,7 +87,7 @@ TIFF, HEIC та інших форматів і відкриє «Параметр
 - Зірочки (S), теги, підписи, альбоми; перетягування фото в інші програми
 - Пакетні дії: поворот, експорт, копіювання, друк, додавання до альбому, видалення
 
-**Перегляд і редагування** (подвійний клік по фото в бібліотеці або в Провіднику)
+**Перегляд і редагування** (подвійний клік по фото в бібліотеці або кнопка «Редагувати» у швидкому переглядачі)
 - Масштаб колесом, 100% подвійним кліком, перетягування; ← → для гортання
 - **Основне**: обрізання (вільно, 1:1, 4:3, 3:2, 16:9, 4:5…), вирівнювання горизонту з сіткою,
   «Магія» (як «Мені пощастить» у Picasa), автоконтраст, автоколір, поворот, дзеркало
@@ -132,7 +145,19 @@ TIFF, HEIC та інших форматів і відкриє «Параметр
 | Перегляд | I | Інформація |
 | Перегляд | Esc | Назад до бібліотеки |
 | Слайдшоу | пробіл, ← →, Esc | Пауза, гортати, вихід |
+| Швидкий переглядач | ← →, пробіл, Home / End | Попереднє / наступне, перше / останнє |
+| Швидкий переглядач | колесо, + −, 0, 1 | Масштаб, вмістити, 100% |
+| Швидкий переглядач | Ctrl+L / Ctrl+R | Повернути ліворуч / праворуч |
+| Швидкий переглядач | Delete, Enter | У кошик, відкрити в редакторі |
+| Швидкий переглядач | Esc, клік по тлі | Закрити |
 | Будь-де | F11 | Повний екран |
+
+## Аргументи командного рядка
+```
+LumioPhoto.exe                  бібліотека
+LumioPhoto.exe фото.jpg         швидкий переглядач (так фото відкриває Провідник)
+LumioPhoto.exe --edit фото.jpg  одразу редактор
+```
 
 ## Формати
 JPEG, PNG, BMP, GIF, а також WebP і TIFF, якщо в Qt встановлено модуль «Qt Image Formats».
@@ -143,6 +168,7 @@ HEIC/AVIF — якщо є відповідний плагін Qt.
 src/
   main.cpp              запуск, одна копія програми, відкриття файлів з Провідника
   theme.*, i18n.*       темна / світла тема, українська / англійська
+  quickviewer.*         швидкий переглядач для фото з Провідника (як Picasa Photo Viewer)
   updater.*             перевірка й встановлення оновлень з GitHub Releases
   fileassoc.*           реєстрація як програми для відкриття фото
   mainwindow.*          бібліотека: дерево, сітка, пошук, дії
@@ -170,8 +196,8 @@ MIT — див. [LICENSE](LICENSE). miniz — MIT (`third_party/miniz/LICENSE`).
 
 **Lumio Photo** is a fast, local photo organizer and editor for Windows written in **C++ / Qt** —
 an open replacement for Google Picasa: a library built from your folders, instant thumbnails,
-a viewer, non-destructive editing, albums, slideshows and export. It can be your default photo app —
-double-click a photo in Explorer and it opens in Lumio Photo.
+a viewer, non-destructive editing, albums, slideshows and export. It can be your default photo app:
+double-click a photo in Explorer and it opens in a quick viewer, like Picasa Photo Viewer.
 
 **[⬇ Download the latest version](https://github.com/coldtrace00/LumioPhoto/releases/latest)** — the `LumioPhoto-Setup.exe` file.
 
@@ -195,17 +221,30 @@ Run **`LumioPhoto-Setup.exe`** — a single file containing the whole program. P
 - **Portable version**: the library, settings and thumbnails live in a `data` folder next to the program —
   carry it on a USB stick; nothing is written to the system.
 
+Requires **Windows 10 or 11, 64-bit**.
+
+> **If Windows shows “Windows protected your PC”**, that is SmartScreen: the installer has no paid code-signing
+> certificate, so Windows does not “know” it yet. Click **“More info” → “Run anyway”**. The source code is fully open
+> in this repository, and you can build the program yourself (see below).
+
 ## Default photo app
 Menu ⚙ → **“Open photos with Lumio Photo…”**. The program registers itself for JPG, PNG, BMP, GIF, WebP, TIFF,
 HEIC and other formats and opens “Windows Settings → Default apps → Lumio Photo”. Click the button there that
 makes it the default (Windows 10/11 only lets the user do this). Alternatively: right-click a photo →
 “Open with” → Lumio Photo → “Always”.
 
-After that:
-- **double-clicking a photo in Explorer** opens it in Lumio Photo;
-- ← → browse the other photos in the same folder, like Picasa Photo Viewer;
-- if the program is already open, the photo opens in the same window, without a second copy;
-- photos from folders outside the library are not added to it, but their stars and edits are kept too.
+After that, **double-clicking a photo in Explorer** opens the **quick viewer**, like Picasa Photo Viewer.
+The library does not open. You see just the photo on a dimmed background and a button bar:
+- ← → (and the mouse wheel to zoom) — other photos in the same folder, the next ones are preloaded;
+- −, +, Fit, 100%; drag with the mouse when zoomed in;
+- **rotate left / right** (Ctrl+L / Ctrl+R). Rotation is non-destructive: Lumio Photo remembers it and the file itself
+  is not changed. To write the rotation into the file, open the photo in the editor and click “Save to file”;
+- Move to Recycle Bin (Delete);
+- **Edit** (Enter) — opens the photo in the full Lumio Photo with the editor;
+- Esc, ✕ or a click on the background — close.
+
+If the viewer is already open, a new photo opens in it, without a second copy of the program.
+Photos from folders outside the library are not added to it.
 
 ## Updates
 **One button.** Menu ⚙ → **“Check for updates…”**. The program asks GitHub for the latest release.
@@ -225,7 +264,7 @@ from what you choose in the installer.
   folder tree, All photos, Favorites, Last 30 days, Edited, Albums; fast thumbnail grid with memory and
   disk cache; search by name, tags, caption and folder; sort by date taken, name or size;
   stars (S), tags, captions, albums; drag photos into other apps; batch rotate/export/copy/print/delete.
-- **Viewer and editor** (double-click a photo in the library or in Explorer): zoom with the wheel, 100% on double-click, pan; ← → to browse.
+- **Viewer and editor** (double-click a photo in the library, or “Edit” in the quick viewer): zoom with the wheel, 100% on double-click, pan; ← → to browse.
   - **Basic**: crop (free, 1:1, 4:3, 3:2, 16:9, 4:5…), straighten with a grid, “Magic” (like Picasa's
     “I'm feeling lucky”), auto contrast, auto color, rotate, mirror
   - **Tone**: brightness, contrast, shadows, highlights, saturation, warmth
@@ -237,6 +276,13 @@ from what you choose in the installer.
 - **Two themes: dark and light** — chosen in the installer, switchable in ⚙ → “Theme”.
 - **Two interface languages: Ukrainian and English.** Chosen in the installer and switchable in
   ⚙ → “Мова / Language”.
+
+## Command line
+```
+LumioPhoto.exe                  library
+LumioPhoto.exe photo.jpg        quick viewer (this is how Explorer opens photos)
+LumioPhoto.exe --edit photo.jpg straight to the editor
+```
 
 ## Building from source
 Requires **Qt 6.x** (or Qt 5.15) for **MinGW** + CMake (both come with the Qt Online Installer; the

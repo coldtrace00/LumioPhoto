@@ -34,6 +34,7 @@ set(SOURCES
     src/theme.h           src/theme.cpp
     src/i18n.h            src/i18n.cpp
     src/updater.h         src/updater.cpp
+    src/quickviewer.h     src/quickviewer.cpp
     src/fileassoc.h       src/fileassoc.cpp
 )
 
