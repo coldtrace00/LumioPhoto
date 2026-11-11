@@ -1,0 +1,11 @@
+build/
+build-*/
+dist/
+*.user
+*.user.*
+CMakeLists.txt.user*
+.qtc_clangd/
+.qtcreator/
+*.o
+*.obj
+*.exe

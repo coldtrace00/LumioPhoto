@@ -1,0 +1,4 @@
+# Windows-скрипти мають лишатися з CRLF
+*.bat text eol=crlf
+*.ico binary
+*.png binary

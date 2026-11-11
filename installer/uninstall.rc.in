@@ -1,0 +1,4 @@
+#include "resource.h"
+
+IDI_APPICON ICON "@ICON_FILE@"
+1           24   "@MANIFEST_FILE@"
